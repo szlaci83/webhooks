@@ -1,0 +1,3 @@
+Couchpotato Event
+{message}
+Link: {link}
