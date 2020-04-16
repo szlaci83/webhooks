@@ -2,3 +2,4 @@ email_properties.py
 .idea/
 __pycache__/
 venv/
+*.jpg
