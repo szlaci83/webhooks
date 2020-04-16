@@ -4,18 +4,25 @@ from imdb_service import get_poster
 
 app = Flask(__name__)
 
+IMDB = "https://www.imdb.com/title/%s"
 
-@app.route('/cp2mail', methods=['POST'])
-def cp2mail():
-    IMDB = "https://www.imdb.com/title/%s"
-    message = request.form.get('message', "")
-    imdb_id = request.form.get('imdb_id', None)
+
+def _send_notification(message, imdb_id):
     add_poster = False
+    link = ""
     if imdb_id:
         link = IMDB % imdb_id
         get_poster(link)
         add_poster = True
     send_report_to_all(message, link, add_poster)
+
+
+@app.route('/cp2mail', methods=['POST'])
+def cp2mail():
+    message = request.form.get('message', "")
+    imdb_id = request.form.get('imdb_id', None)
+    _send_notification(message, imdb_id)
+
     response = jsonify("OK", 200)
     response = make_response(response)
     response.headers['Access-Control-Allow-Origin'] = "*"
