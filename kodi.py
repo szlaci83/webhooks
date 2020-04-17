@@ -3,8 +3,6 @@ from email_properties import HOST, PORT, USER, PASS
 
 KODI_CONN_STRING = 'http://' + HOST +":" + str(PORT)
 
-message_rpc =
-
 
 def _send_to_kodi(json_rpc_data):
     passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
@@ -26,11 +24,11 @@ def display_message(title, message):
 
 
 def refresh_video_library():
-    _send_to_kodi('{"jsonrpc": "2.0", "method": "VideoLibrary.Scan", "id": "1"}'.encode())
+    return _send_to_kodi('{"jsonrpc": "2.0", "method": "VideoLibrary.Scan", "id": 1}'.encode())
 
 
 if __name__ == '__main__':
     r = display_message("Test", "This is a test")
     print(r)
-    r = display_message("Test", "This is a test")
+    r = refresh_video_library()
     print(r)
