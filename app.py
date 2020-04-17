@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, make_response
 from mail_service import send_report_to_all
 from imdb_service import get_poster
+import kodi
 
 app = Flask(__name__)
 
@@ -22,7 +23,7 @@ def cp2mail():
     message = request.form.get('message', "")
     imdb_id = request.form.get('imdb_id', None)
     _send_notification(message, imdb_id)
-
+    kodi.display_message("Couchpotato Event", message)
     response = jsonify("OK", 200)
     response = make_response(response)
     response.headers['Access-Control-Allow-Origin'] = "*"
