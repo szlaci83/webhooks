@@ -2,8 +2,8 @@ import urllib.request as urllib2
 from email_properties import HOST, PORT, USER, PASS
 
 KODI_CONN_STRING = 'http://' + HOST +":" + str(PORT)
-refresh_vid_lib_rpc = '{"jsonrpc": "2.0", "method": "VideoLibrary.Scan", "id": "1"}'
-message_rpc = '{"jsonrpc": "2.0", "method": "GUI.ShowNotification", "params": {"title": "%s", "message": "%s"}, "id": 1}'
+
+message_rpc =
 
 
 def _send_to_kodi(json_rpc_data):
@@ -16,13 +16,17 @@ def _send_to_kodi(json_rpc_data):
 
 
 def display_message(title, message):
-    data = (message_rpc % (title, message)).encode()
+    data = ('{"jsonrpc": "2.0",'
+            ' "method": "GUI.ShowNotification",'
+            ' "params": {"title": "%s", "message": "%s"},'
+            ' "id": 1}'
+            % (title, message)).encode()
     res = _send_to_kodi(data)
     return res
 
 
-def refres_video_library():
-    _send_to_kodi(refresh_vid_lib_rpc.encode())
+def refresh_video_library():
+    _send_to_kodi('{"jsonrpc": "2.0", "method": "VideoLibrary.Scan", "id": "1"}'.encode())
 
 
 if __name__ == '__main__':
