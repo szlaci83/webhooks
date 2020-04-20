@@ -3,7 +3,7 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email_properties import *
+from properties import *
 from mail_repo import create_mail
 
 
@@ -37,9 +37,10 @@ def _sendmail(to, subject, html, text, add_poster):
     server.quit()
 
 
+## rewrite this:
 def send_report_mail(to_mail, message, link, add_poster):
     html, text = create_mail(message, link)
-    _sendmail(to_mail, SUBJECT, html, text, add_poster)
+    _sendmail(to_mail, SUBJECT_CP, html, text, add_poster)
 
 
 def send_report_to_all(message, link, add_poster):

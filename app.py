@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, make_response
 from mail_service import send_report_to_all
 from imdb_service import get_poster
-import kodi
+import kodi_service as kodi
 
 app = Flask(__name__)
 

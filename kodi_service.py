@@ -1,14 +1,12 @@
 import urllib.request as urllib2
-from email_properties import HOST, PORT, USER, PASS
-
-KODI_CONN_STRING = 'http://' + HOST +":" + str(PORT)
+from properties import Kodi_conn
 
 
 def _send_to_kodi(json_rpc_data):
     passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
-    passman.add_password(None, KODI_CONN_STRING, USER, PASS)
+    passman.add_password(**Kodi_conn)
     urllib2.install_opener(urllib2.build_opener(urllib2.HTTPBasicAuthHandler(passman)))
-    conn = urllib2.Request(KODI_CONN_STRING + '/jsonrpc', headers={"Content-Type": "application/json"})
+    conn = urllib2.Request(Kodi_conn.get('uri') + '/jsonrpc', headers={"Content-Type": "application/json"})
     res = urllib2.urlopen(conn, data=json_rpc_data).read()
     return res
 
@@ -30,5 +28,5 @@ def refresh_video_library():
 if __name__ == '__main__':
     r = display_message("Test", "This is a test")
     print(r)
-    r = refresh_video_library()
+    #r = refresh_video_library()
     print(r)
