@@ -17,7 +17,7 @@ Kodi_conn = {
 
 # Transmission
 Transmission = {
-    'host': 'localhost',
+    'address': 'localhost',
     'port': 9091,
     'user': '',
     'password': ''

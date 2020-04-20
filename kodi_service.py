@@ -28,5 +28,5 @@ def refresh_video_library():
 if __name__ == '__main__':
     r = display_message("Test", "This is a test")
     print(r)
-    #r = refresh_video_library()
+    r = refresh_video_library()
     print(r)
