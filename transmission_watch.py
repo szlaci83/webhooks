@@ -5,13 +5,13 @@ import mail_service as mail
 PATTERN = '%r downloaded'
 
 def main():
-    all_finished = transmission.get_latest_finished(4800)
+    all_finished = transmission.get_latest_finished()
     if len(all_finished) == 0:
         return
     msg = all_finished[0].name if len(all_finished) == 1 else len(all_finished)
     kodi.display_message("Transmission Event", PATTERN % msg)
     kodi.refresh_video_library()
-    msg = "\n".join(all_finished.name)
+    msg = "\n".join([t.name for t in all_finished])
     mail.send_tr_mail_to_all(msg)
 
 

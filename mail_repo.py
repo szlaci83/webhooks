@@ -2,7 +2,6 @@
     Repository using html and txt templates to create e-mails 
 '''
 
-
 def create_cp_mail(message, link):
     body, text = _get_from_template('cp')
     body = body.format(message=message, link=link)
@@ -18,9 +17,9 @@ def create_tr_mail(message):
 
 
 def _get_from_template(template_name):
-    with open('templates/' + template_name + '.html', 'r') as html_file:
+    with open('/home/laci/git/webhooks/templates/' + template_name + '.html', 'r') as html_file:
         body = html_file.read().replace("\n", "")
-    with open('templates/' + template_name + '.txt', 'r') as text_file:
+    with open('/home/laci/git/webhooks/templates/' + template_name + '.txt', 'r') as text_file:
         text = text_file.read()
     return body, text
 

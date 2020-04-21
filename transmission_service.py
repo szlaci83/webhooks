@@ -11,6 +11,6 @@ def get_latest_finished(lookback_min=DEFAULT_LOOKBACK_MINS):
 
 
 if __name__ == '__main__':
-    for t in get_latest_finished(2880):
+    for t in get_latest_finished(4880):
         print(t.name)
 
