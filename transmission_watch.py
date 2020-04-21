@@ -8,10 +8,10 @@ def main():
     all_finished = transmission.get_latest_finished(4800)
     if len(all_finished) == 0:
         return
-    msg = all_finished[0] if len(all_finished) == 1 else len(all_finished)
+    msg = all_finished[0].get('name', "") if len(all_finished) == 1 else len(all_finished)
     kodi.display_message("Transmission Event", PATTERN % msg)
     kodi.refresh_video_library()
-    msg = "\n".join(all_finished)
+    msg = "\n".join(all_finished.get("name", ""))
     mail.send_tr_mail_to_all(msg)
 
 
