@@ -3,10 +3,17 @@
 '''
 
 
-def create_mail(message, link):
+def create_cp_mail(message, link):
     body, text = _get_from_template('cp')
     body = body.format(message=message, link=link)
     text = text.format(message=message, link=link)
+    return body, text
+
+
+def create_tr_mail(message):
+    body, text = _get_from_template('tr')
+    body = body.format(message=message)
+    text = text.format(message=message)
     return body, text
 
 
@@ -19,8 +26,8 @@ def _get_from_template(template_name):
 
 
 def _example():
-    print(create_mail("got", "link"))
-    print(create_mail("", ""))
+    print(create_cp_mail("got", "link"))
+    print(create_cp_mail("", ""))
 
 
 if __name__ == "__main__":

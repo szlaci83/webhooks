@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, make_response
-from mail_service import send_report_to_all
+from mail_service import send_cp_mail_to_all
 from imdb_service import get_poster
 import kodi_service as kodi
 
@@ -15,7 +15,7 @@ def _send_notification(message, imdb_id):
         link = IMDB % imdb_id
         get_poster(link)
         add_poster = True
-    send_report_to_all(message, link, add_poster)
+    send_cp_mail_to_all(message, link, add_poster)
 
 
 @app.route('/cp2mail', methods=['POST'])

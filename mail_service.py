@@ -4,7 +4,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from properties import *
-from mail_repo import create_mail
+from mail_repo import create_cp_mail, create_tr_mail
 
 
 def _sendmail(to, subject, html, text, add_poster):
@@ -37,21 +37,30 @@ def _sendmail(to, subject, html, text, add_poster):
     server.quit()
 
 
-## rewrite this:
-def send_report_mail(to_mail, message, link, add_poster):
-    html, text = create_mail(message, link)
+def send_cp_mail(to_mail, html, text, add_poster):
     _sendmail(to_mail, SUBJECT_CP, html, text, add_poster)
 
 
-def send_report_to_all(message, link, add_poster):
+def send_cp_mail_to_all(message, link, add_poster):
+    html, text = create_cp_mail(message, link)
     for person in ADDRESSEES:
-        send_report_mail(person, message, link, add_poster)
+        send_cp_mail(person, html, text, add_poster)
+
+
+def send_tr_mail(to_mail, html, text):
+    _sendmail(to_mail, SUBJECT_TR, html, text, False)
+
+
+def send_tr_mail_to_all(message):
+    html, text = create_tr_mail(message)
+    for person in ADDRESSEES:
+        send_tr_mail(person, html, text)
 
 
 def _example():
-    send_report_mail(TEST_EMAIL, "Test", 'http://semmi', add_poster=True)
-    send_report_mail(TEST_EMAIL, "Test", 'http://semmi', add_poster=False)
-
+    #send_cp_mail(TEST_EMAIL, "Test", 'http://semmi', add_poster=True)
+    #send_cp_mail(TEST_EMAIL, "Test2", 'http://semmi', add_poster=False)
+    send_tr_mail_to_all("Testinggg")
 
 if __name__ == "__main__":
     _example()
