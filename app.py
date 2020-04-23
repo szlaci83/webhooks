@@ -8,6 +8,15 @@ app = Flask(__name__)
 IMDB = "https://www.imdb.com/title/%s"
 
 
+@property
+def OK():
+    response = jsonify("OK", 200)
+    response = make_response(response)
+    response.headers['Access-Control-Allow-Origin'] = "*"
+    response.headers['content-type'] = "application/json"
+    return response
+
+
 def _send_notification(message, imdb_id):
     add_poster = False
     link = ""
@@ -24,11 +33,14 @@ def cp2mail():
     imdb_id = request.form.get('imdb_id', None)
     _send_notification(message, imdb_id)
     kodi.display_message("Couchpotato Event", message)
-    response = jsonify("OK", 200)
-    response = make_response(response)
-    response.headers['Access-Control-Allow-Origin'] = "*"
-    response.headers['content-type'] = "application/json"
-    return response
+    return OK
+
+
+@app.route('/sonarr2mail', methods=['POST'])
+def sonarr2mail():
+    print(request.json)
+    print(request.form)
+    return OK
 
 
 if __name__ == '__main__':
