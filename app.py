@@ -8,7 +8,6 @@ app = Flask(__name__)
 IMDB = "https://www.imdb.com/title/%s"
 
 
-@property
 def OK():
     response = jsonify("OK", 200)
     response = make_response(response)
@@ -33,20 +32,39 @@ def cp2mail():
     imdb_id = request.form.get('imdb_id', None)
     _send_notification(message, imdb_id)
     kodi.display_message("Couchpotato Event", message)
-    return OK
+    return OK()
 
 
 @app.route('/sonarr2mail', methods=['POST'])
 def sonarr2mail():
-    print(request.json)
-    print(request.form)
-    return OK
+    data = request.json
+    event = data.get("eventType", {})
+    series = data.get("series", {})
+    episodes = series.get("episodes", [])
+    msg = ""
+    for ep in episodes:
+        msg = msg + "%s : S%sE%s-%s %s\n" % \
+              (series.get("title", ""),
+               ep.get("seasonNumber", ""),
+               ep.get("episodeNumber", ""),
+               ep.get("title", ""),
+               event
+               )
+        print(msg)
+    return OK()
 
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=4040)
 
-
+# {
+#   'eventType': 'Test',
+#   'series': {
+#              'title': 'Test Title',
+#              'tvdbId': 1234,
+#              'id': 1,
+#              'path': 'C:\\testpath'}
+#    , 'episodes': [{'qualityVersion': 0, 'title': 'Test title', 'seasonNumber': 1, 'id': 123, 'episodeNumber': 1}]}
 
 
 
