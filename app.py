@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, make_response
 from mail_service import send_cp_mail_to_all
 from imdb_service import get_poster
 import kodi_service as kodi
+import logging
 
 app = Flask(__name__)
 
@@ -38,9 +39,11 @@ def cp2mail():
 @app.route('/sonarr2mail', methods=['POST'])
 def sonarr2mail():
     data = request.json
-    event = data.get("eventType", {})
+    with open("data.json", "a") as f:
+        f.write(data)
+    event = data["eventType"]
     series = data.get("series", {})
-    episodes = series.get("episodes", [])
+    episodes = data.get("episodes", [])
     msg = ""
     for ep in episodes:
         msg = msg + "%s : S%sE%s-%s %s\n" % \
@@ -50,7 +53,6 @@ def sonarr2mail():
                ep.get("title", ""),
                event
                )
-        print(msg)
     return OK()
 
 
