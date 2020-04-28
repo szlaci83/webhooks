@@ -8,7 +8,6 @@ app = Flask(__name__)
 IMDB = "https://www.imdb.com/title/%s"
 
 
-@property
 def OK():
     response = jsonify("OK", 200)
     response = make_response(response)
@@ -33,14 +32,13 @@ def cp2mail():
     imdb_id = request.form.get('imdb_id', None)
     _send_notification(message, imdb_id)
     kodi.display_message("Couchpotato Event", message)
-    return OK
+    return OK()
 
 
 @app.route('/sonarr2mail', methods=['POST'])
 def sonarr2mail():
     print(request.json)
-    print(request.form)
-    return OK
+    return OK()
 
 
 if __name__ == '__main__':
