@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, make_response
-from mail_service import send_cp_mail_to_all
+from mail_service import send_cp_mail_to_all, send_sonarr_mail_to_all
 from imdb_service import get_poster
 import kodi_service as kodi
 import logging
@@ -53,6 +53,7 @@ def sonarr2mail():
                ep.get("title", ""),
                event
                )
+    send_sonarr_mail_to_all(msg)
     return OK()
 
 

@@ -16,6 +16,13 @@ def create_tr_mail(message):
     return body, text
 
 
+def create_sonarr_mail(message):
+    body, text = _get_from_template('sonarr')
+    body = body.format(message=message)
+    text = text.format(message=message)
+    return body, text
+
+
 def _get_from_template(template_name):
     with open('/home/laci/git/webhooks/templates/' + template_name + '.html', 'r') as html_file:
         body = html_file.read().replace("\n", "")

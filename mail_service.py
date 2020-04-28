@@ -4,7 +4,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from properties import *
-from mail_repo import create_cp_mail, create_tr_mail
+from mail_repo import create_cp_mail, create_tr_mail, create_sonarr_mail
 
 
 def _sendmail(to, subject, html, text, add_poster):
@@ -53,6 +53,16 @@ def send_tr_mail(to_mail, html, text):
 
 def send_tr_mail_to_all(message):
     html, text = create_tr_mail(message)
+    for person in ADDRESSEES:
+        send_tr_mail(person, html, text)
+
+
+def send_sonarr_mail(to_mail, html, text):
+    _sendmail(to_mail, SUBJECT_SONARR, html, text, False)
+
+
+def send_sonarr_mail_to_all(message):
+    html, text = create_sonarr_mail(message)
     for person in ADDRESSEES:
         send_tr_mail(person, html, text)
 
