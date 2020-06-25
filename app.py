@@ -40,7 +40,7 @@ def cp2mail():
 def sonarr2mail():
     data = request.json
     with open("data.json", "a") as f:
-        f.write(data)
+        f.write(str(data))
     event = data["eventType"]
     series = data.get("series", {})
     episodes = data.get("episodes", [])

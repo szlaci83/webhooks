@@ -64,7 +64,7 @@ def send_sonarr_mail(to_mail, html, text):
 def send_sonarr_mail_to_all(message):
     html, text = create_sonarr_mail(message)
     for person in ADDRESSEES:
-        send_tr_mail(person, html, text)
+        send_sonarr_mail(person, html, text)
 
 
 def _example():
