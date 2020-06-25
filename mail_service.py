@@ -47,14 +47,14 @@ def send_cp_mail_to_all(message, link, add_poster):
         send_cp_mail(person, html, text, add_poster)
 
 
-def send_tr_mail(to_mail, html, text):
-    _sendmail(to_mail, SUBJECT_TR, html, text, False)
+def send_tr_mail(to_mail, html, text, add_poster):
+    _sendmail(to_mail, SUBJECT_TR, html, text, add_poster)
 
 
-def send_tr_mail_to_all(message):
+def send_tr_mail_to_all(message, add_poster=False):
     html, text = create_tr_mail(message)
     for person in ADDRESSEES:
-        send_tr_mail(person, html, text)
+        send_tr_mail(person, html, text, add_poster)
 
 
 def send_sonarr_mail(to_mail, html, text):
