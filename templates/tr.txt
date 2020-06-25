@@ -1,3 +1,2 @@
 Torrent downloaded:
 {message}
-Link: {link}
