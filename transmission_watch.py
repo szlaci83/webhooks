@@ -14,8 +14,11 @@ def notify_kodi(msg, update=True):
 
 
 def notify_mail(msg, add_poster=False):
-    imdb.get_poster_by_name(msg)
-    mail.send_tr_mail_to_all(msg, add_poster=add_poster)
+    res = imdb.get_poster_by_name(msg)
+    if not res:
+        mail.send_tr_mail_to_all(msg, add_poster=False)
+    else:
+        mail.send_tr_mail_to_all(msg, add_poster=add_poster)
 
 
 def check_downloaded():
@@ -23,6 +26,7 @@ def check_downloaded():
     if len(all_finished) == 0:
         return
     msg = all_finished[0].name if len(all_finished) == 1 else len(all_finished)
+    print(msg)
     try:
         notify_kodi(msg)
     except Exception as e:
