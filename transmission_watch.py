@@ -43,7 +43,7 @@ def stop_seeding():
     stopped = transmission.stop_seeding()
     if len(stopped) == 0:
         return
-    msg = "STOP_SEEDING:" + ", ".join([s.name for s in stopped])
+    msg = "STOP_SEEDING:\n" + "\n ".join([s.name for s in stopped])
     try:
         notify_kodi(msg)
     except Exception as e:
