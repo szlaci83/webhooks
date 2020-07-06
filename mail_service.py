@@ -5,12 +5,13 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from properties import *
 from mail_repo import create_cp_mail, create_tr_mail, create_sonarr_mail
-
+from email.header import Header
+from email.utils import formataddr
 
 def _sendmail(to, subject, html, text, add_poster):
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
-    msg['From'] = FROM_ADDR
+    msg['From'] = formataddr((str(Header(subject, 'utf-8')), FROM_ADDR))
     msg['To'] = to
 
     if add_poster:
