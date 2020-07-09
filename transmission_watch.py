@@ -13,12 +13,16 @@ def notify_kodi(msg, update=True):
         kodi.refresh_video_library()
 
 
-def notify_mail(msg, add_poster=False):
+def notify_dl_mail(msg, add_poster=False):
     res = imdb.get_poster_by_name(msg)
     if not res:
-        mail.send_tr_mail_to_all(msg, add_poster=False)
+        mail.send_tr_dl_mail_to_all(msg, add_poster=False)
     else:
-        mail.send_tr_mail_to_all(msg, add_poster=add_poster)
+        mail.send_tr_dl_mail_to_all(msg, add_poster=add_poster)
+
+def notify_stop_mail(msg, add_poster=False):
+    mail.send_tr_stop_mail_to_all(msg, add_poster=False)
+    
 
 
 def check_downloaded():
@@ -33,10 +37,10 @@ def check_downloaded():
         print(str(e))
     for t in all_finished:
         try:
-            notify_mail(t.name, add_poster=True)
+            notify_dl_mail(t.name, add_poster=True)
         except Exception as e:
             print(str(e))
-            notify_mail(t.name)
+            notify_dl_mail(t.name)
 
 
 def stop_seeding():
@@ -48,7 +52,7 @@ def stop_seeding():
         notify_kodi(msg)
     except Exception as e:
         print(str(e))
-    notify_mail(msg)
+    notify_stop_mail(msg)
 
 
 def main():
