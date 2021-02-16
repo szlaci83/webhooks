@@ -31,10 +31,13 @@ def get_poster(imdb_url):
     _dl_poster(poster_url)
 
 
-def get_poster_by_name(torrent_title):
+def get_imdb_id(torrent_title):
     movie_title = PTN.parse(torrent_title).get('title', '')
-    imdb_id = _search_for_id(movie_title)
-    get_poster("https://www.imdb.com%s" % imdb_id)
+    return _search_for_id(movie_title)
+
+
+def get_poster_by_name(torrent_title):
+    get_poster("https://www.imdb.com%s" % get_imdb_id(torrent_title))
 
 
 if __name__ == '__main__':
