@@ -31,14 +31,18 @@ def get_poster(imdb_url):
     _dl_poster(poster_url)
 
 
+
 def get_imdb_id(torrent_title):
     movie_title = PTN.parse(torrent_title).get('title', '')
     return _search_for_id(movie_title)
 
 
 def get_poster_by_name(torrent_title):
-    get_poster("https://www.imdb.com%s" % get_imdb_id(torrent_title))
-
+    try:
+	get_poster("https://www.imdb.com%s" % get_imdb_id(torrent_title))
+	return True
+    except:
+        return None
 
 if __name__ == '__main__':
     title = "Pineapple.Express.UNRATED.PROPER.720p.BluRay.x264-SEPTiC"

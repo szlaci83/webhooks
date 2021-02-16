@@ -5,12 +5,13 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from properties import *
 from mail_repo import create_cp_mail, create_tr_mail, create_sonarr_mail
+from email.header import Header
+from email.utils import formataddr
 
-
-def _sendmail(to, subject, html, text, add_poster):
+def _sendmail(to, subject, html, text, add_poster, header=""):
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
-    msg['From'] = FROM_ADDR
+    msg['From'] = formataddr((str(Header(header, 'utf-8')), FROM_ADDR))
     msg['To'] = to
 
     if add_poster:
@@ -38,7 +39,7 @@ def _sendmail(to, subject, html, text, add_poster):
 
 
 def send_cp_mail(to_mail, html, text, add_poster):
-    _sendmail(to_mail, SUBJECT_CP, html, text, add_poster)
+    _sendmail(to_mail, SUBJECT_CP, html, text, add_poster, HEADER_CP)
 
 
 def send_cp_mail_to_all(message, link, add_poster):
@@ -47,18 +48,26 @@ def send_cp_mail_to_all(message, link, add_poster):
         send_cp_mail(person, html, text, add_poster)
 
 
-def send_tr_mail(to_mail, html, text, add_poster):
-    _sendmail(to_mail, SUBJECT_TR, html, text, add_poster)
+def send_tr_stop_mail(to_mail, html, text, add_poster):
+    _sendmail(to_mail, SUBJECT_TR_STOP, html, text, add_poster, HEADER_TR)
+
+def send_tr_dl_mail(to_mail, html, text, add_poster):
+    _sendmail(to_mail, SUBJECT_TR_DOWNLOADED, html, text, add_poster, HEADER_TR)
 
 
-def send_tr_mail_to_all(message, add_poster=False):
+def send_tr_stop_mail_to_all(message, add_poster=False):
     html, text = create_tr_mail(message)
     for person in ADDRESSEES:
-        send_tr_mail(person, html, text, add_poster)
+        send_tr_stop_mail(person, html, text, add_poster)
+
+def send_tr_dl_mail_to_all(message, add_poster=False):
+    html, text = create_tr_mail(message)
+    for person in ADDRESSEES:
+        send_tr_dl_mail(person, html, text, add_poster)
 
 
 def send_sonarr_mail(to_mail, html, text):
-    _sendmail(to_mail, SUBJECT_SONARR, html, text, False)
+    _sendmail(to_mail, SUBJECT_SONARR, html, text, False, HEADER_SONARR)
 
 
 def send_sonarr_mail_to_all(message):
